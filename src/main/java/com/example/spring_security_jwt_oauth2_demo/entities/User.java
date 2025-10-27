@@ -1,24 +1,23 @@
 package com.example.spring_security_jwt_oauth2_demo.entities;
 
 import jakarta.persistence.*;
-import java.util.*;
 
-@Entity
-@Table(name = "tb_user")
+@Entity // Representa uma tabela no banco de dados
+@Table(name = "tb_user") // Anotação para dar nome à tabela em um banco de dados
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String name;
+    private String login;
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private final Set<Role> roles = new HashSet<>();
+    public User() {}
 
-    public User(Long id, String username, String password) {
+    public User(Long id, String name, String login, String password) {
         this.id = id;
-        this.username = username;
+        this.name = name;
+        this.login = login;
         this.password = password;
     }
 
@@ -30,12 +29,20 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -44,21 +51,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }
